@@ -82,8 +82,8 @@ class BrowserManager {
         const image = await Jimp.read(buffer);
         const { width, height } = image.bitmap;
 
-        // 1. Process image: grayscale and threshold
-        image.grayscale().threshold({ max: 128 });
+        // 1. Process image: grayscale
+        image.grayscale();
 
         // 2. Prepare BMP 1-bit data
         // Rows are padded to 4-byte boundaries
@@ -119,8 +119,13 @@ class BrowserManager {
             for (let x = 0; x < width; x++) {
                 const idx = (y * width + x) * 4;
                 const r = image.bitmap.data[idx];
-                // Since it's thresholded, R=G=B=0 or 255
-                if (r > 0) {
+                const g = image.bitmap.data[idx + 1];
+                const b = image.bitmap.data[idx + 2];
+
+                // Manual threshold: if average brightness > 128, it's white (1)
+                // Otherwise it's black (0, which is default in Buffer.alloc)
+                const brightness = (r + g + b) / 3;
+                if (brightness > 128) {
                     const byteIdx = rowOffset + Math.floor(x / 8);
                     const bitIdx = 7 - (x % 8);
                     bmpBuffer[byteIdx] |= (1 << bitIdx);

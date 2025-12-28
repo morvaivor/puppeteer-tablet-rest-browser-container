@@ -4,7 +4,8 @@ const Jimp = require('jimp');
 async function convertTo1BitBMP(buffer) {
     const image = await Jimp.read(buffer);
     const { width, height } = image.bitmap;
-    image.grayscale().threshold({ max: 128 });
+
+    image.grayscale();
 
     const rowSize = Math.floor((width + 31) / 32) * 4;
     const pixelDataSize = rowSize * height;
@@ -31,7 +32,11 @@ async function convertTo1BitBMP(buffer) {
         for (let x = 0; x < width; x++) {
             const idx = (y * width + x) * 4;
             const r = image.bitmap.data[idx];
-            if (r > 0) {
+            const g = image.bitmap.data[idx + 1];
+            const b = image.bitmap.data[idx + 2];
+
+            const brightness = (r + g + b) / 3;
+            if (brightness > 128) {
                 const byteIdx = rowOffset + Math.floor(x / 8);
                 const bitIdx = 7 - (x % 8);
                 bmpBuffer[byteIdx] |= (1 << bitIdx);
