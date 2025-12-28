@@ -7,6 +7,7 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
+      - NVIDIA_DISABLE_REQUIRE=true
     deploy:
       resources:
         reservations:

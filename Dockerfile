@@ -25,7 +25,7 @@ COPY . .
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable \
     NVIDIA_VISIBLE_DEVICES=all \
-    NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics,display
+    NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 
 # Expose the API port
 EXPOSE 3000
