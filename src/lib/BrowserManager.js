@@ -70,6 +70,14 @@ class BrowserManager {
         return await this.convertTo1BitBMP(pngBuffer);
     }
 
+    async screenshotPNG(id) {
+        const page = this.tabs.get(id);
+        if (!page) {
+            throw new Error(`Tab with ID ${id} not found`);
+        }
+        return await page.screenshot();
+    }
+
     async convertTo1BitBMP(buffer) {
         const image = await Jimp.read(buffer);
         const { width, height } = image.bitmap;

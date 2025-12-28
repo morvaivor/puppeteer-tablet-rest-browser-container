@@ -59,6 +59,17 @@ router.get('/tabs/:id/screenshot', async (req, res) => {
     const { id } = req.params;
     try {
         const buffer = await browserManager.screenshot(id);
+        res.set('Content-Type', 'image/bmp');
+        res.send(buffer);
+    } catch (error) {
+        res.status(error.message.includes('not found') ? 404 : 500).json({ error: error.message });
+    }
+});
+
+router.get('/tabs/:id/screenshot/png', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const buffer = await browserManager.screenshotPNG(id);
         res.set('Content-Type', 'image/png');
         res.send(buffer);
     } catch (error) {
