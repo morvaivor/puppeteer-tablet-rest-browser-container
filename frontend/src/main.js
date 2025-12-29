@@ -27,8 +27,14 @@ const PAGES = [
 ];
 
 async function refreshHAData() {
-  const [haData, trains] = await Promise.all([getMaisonData(), getTrains()]);
-  state.data = { ...state.data, ...haData, trains };
+  const haData = await getMaisonData();
+  state.data = { ...state.data, ...haData };
+  updateView();
+}
+
+async function refreshTrains() {
+  const trains = await getTrains();
+  state.data = { ...state.data, trains };
   updateView();
 }
 
@@ -88,9 +94,10 @@ window.addEventListener('hashchange', () => {
 // Initial Render and Polling
 document.addEventListener('DOMContentLoaded', async () => {
   // Initial fetch
-  await Promise.all([refreshHAData(), refreshNewsData()]);
+  await Promise.all([refreshHAData(), refreshTrains(), refreshNewsData()]);
 
   // Decoupled intervals
-  setInterval(refreshHAData, 30000);   // Home Assistant & Trains: 30 seconds
-  setInterval(refreshNewsData, 300000); // News: 5 minutes (300,000 ms)
+  setInterval(refreshHAData, 30000);   // Home Assistant: 30 seconds
+  setInterval(refreshTrains, 300000);  // Trains: 5 minutes
+  setInterval(refreshNewsData, 300000); // News: 5 minutes
 });
