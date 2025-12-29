@@ -68,13 +68,6 @@ function updateView() {
         <h1>${page.title}</h1>
       </div>
       <div class="metric" style="margin-top: 1.5rem;">${content}</div>
-      
-      <div class="grid-container">
-        <div class="card">
-          <div class="label">Status</div>
-          <div style="font-size: 0.8rem">Actualisé toutes les 30s</div>
-        </div>
-      </div>
     </div>
   `;
 }

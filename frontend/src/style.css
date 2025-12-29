@@ -18,8 +18,8 @@ body {
   color: var(--text-color);
   font-family: var(--font-main);
   overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+  width: 800px;
+  height: 480px;
   display: flex;
   flex-direction: column;
 }
@@ -52,9 +52,13 @@ h1 {
 }
 
 .metric {
-  font-size: 5rem;
+  font-size: 4rem;
   font-weight: 900;
   line-height: 1.1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .news-content {
@@ -90,21 +94,7 @@ h1 {
   letter-spacing: 0.1rem;
 }
 
-/* Grid Layout Elements */
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.card {
-  border: var(--border-width) solid var(--text-color);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+/* Unused grid styles removed */
 
 /* Navigation Indicators (Discreet) */
 .nav-indicator {
