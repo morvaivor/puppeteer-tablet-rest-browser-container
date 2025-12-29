@@ -1,10 +1,11 @@
 services:
   eink-dashboard:
-    build: .
+    build:
+      context: .
+      args:
+        - VITE_HA_URL=${VITE_HA_URL:-http://homeassistant.local:8123}
+        - VITE_HA_TOKEN=${VITE_HA_TOKEN}
     container_name: eink-dashboard
     restart: unless-stopped
     ports:
       - "8080:80"
-    environment:
-      - VITE_HA_URL=http://your-ha-ip:8123
-      - VITE_HA_TOKEN=your-token

@@ -1,3 +1,5 @@
+# Root Compose: Builds both Backend and Frontend
+# Uses environment variables from a .env file at this level
 version: '3.8'
 
 services:

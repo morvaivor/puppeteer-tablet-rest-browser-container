@@ -3,8 +3,12 @@ FROM node:20-slim AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+
+ARG VITE_HA_URL
+ARG VITE_HA_TOKEN
+
 COPY . .
-RUN npm run build
+RUN VITE_HA_URL=$VITE_HA_URL VITE_HA_TOKEN=$VITE_HA_TOKEN npm run build
 
 # Production stage
 FROM nginx:alpine
