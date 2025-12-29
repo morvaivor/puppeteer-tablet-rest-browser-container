@@ -3,7 +3,7 @@
  */
 
 const HA_URL = import.meta.env.VITE_HA_URL || 'http://homeassistant.local:8123';
-const HA_TOKEN = import.meta.env.VITE_HA_TOKEN || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIzNTUzZmM4MDdlZjE0NjYwOGVjNGRkYjcyMTc4YTA2NyIsImlhdCI6MTc2NzAyNTc1NywiZXhwIjoyMDgyMzg1NzU3fQ.oGALg8N_Z02znKSO6jFC1bM6pPxIFZL-_1MRjxA24EA';
+const HA_TOKEN = import.meta.env.VITE_HA_TOKEN;
 
 export async function getEntity(entityId) {
     try {
