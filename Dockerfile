@@ -1,4 +1,17 @@
-# Use official Node.js image
+# --- Stage 1: Build Frontend ---
+FROM node:20-slim AS frontend-builder
+WORKDIR /app/frontend
+
+# Arguments for Home Assistant
+ARG VITE_HA_URL
+ARG VITE_HA_TOKEN
+
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ ./
+RUN VITE_HA_URL=$VITE_HA_URL VITE_HA_TOKEN=$VITE_HA_TOKEN npm run build
+
+# --- Stage 2: Final Image ---
 FROM node:20-slim
 
 # Install dependencies for Puppeteer/Chromium
@@ -14,12 +27,16 @@ RUN apt-get update \
 # Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy backend package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy source code
+# Copy backend source code
 COPY . .
+
+# Copy built frontend from Stage 1 to the backend's public directory
+RUN mkdir -p public
+COPY --from=frontend-builder /app/frontend/dist ./public
 
 # Environment variables for Puppeteer and NVIDIA GPU
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \

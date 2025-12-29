@@ -2,11 +2,17 @@ version: '3.8'
 
 services:
   tablette:
-    build: .
+    build:
+      context: .
+      args:
+        - VITE_HA_URL=${VITE_HA_URL:-http://homeassistant.local:8123}
+        - VITE_HA_TOKEN=${VITE_HA_TOKEN}
     ports:
       - "3000:3000"
     environment:
       - PORT=3000
+      - VITE_HA_URL=${VITE_HA_URL:-http://homeassistant.local:8123}
+      - VITE_HA_TOKEN=${VITE_HA_TOKEN}
       - NVIDIA_DISABLE_REQUIRE=true
     deploy:
       resources:
